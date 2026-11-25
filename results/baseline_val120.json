@@ -1,0 +1,148 @@
+{
+ "pages": 120,
+ "split": "val",
+ "note": "same 120 val pages as colab val_pages",
+ "baseline": {
+  "A_whole": {
+   "H": {
+    "gt": 126,
+    "found": 100.0,
+    "read": 84.9
+   },
+   "P": {
+    "gt": 995,
+    "found": 80.8,
+    "read": 72.2
+   },
+   "Q": {
+    "gt": 3085,
+    "found": 47.6,
+    "read": 26.6
+   },
+   "S": {
+    "gt": 125,
+    "found": 99.2,
+    "read": 91.2
+   },
+   "all": {
+    "gt": 4331,
+    "found": 58.2,
+    "read": 40.7
+   },
+   "arabic": {
+    "gt": 530,
+    "found": 69.2,
+    "read": 56.0
+   },
+   "rotated": {
+    "gt": 1758,
+    "found": 35.4,
+    "read": 20.6
+   },
+   "thai": {
+    "gt": 3801,
+    "found": 56.7,
+    "read": 38.5
+   },
+   "upright": {
+    "gt": 2573,
+    "found": 73.8,
+    "read": 54.3
+   }
+  },
+  "B_tiled": {
+   "H": {
+    "gt": 126,
+    "found": 98.4,
+    "read": 82.5
+   },
+   "P": {
+    "gt": 995,
+    "found": 87.4,
+    "read": 79.0
+   },
+   "Q": {
+    "gt": 3085,
+    "found": 76.7,
+    "read": 36.8
+   },
+   "S": {
+    "gt": 125,
+    "found": 96.0,
+    "read": 91.2
+   },
+   "all": {
+    "gt": 4331,
+    "found": 80.3,
+    "read": 49.4
+   },
+   "arabic": {
+    "gt": 530,
+    "found": 92.5,
+    "read": 67.5
+   },
+   "rotated": {
+    "gt": 1758,
+    "found": 68.4,
+    "read": 42.6
+   },
+   "thai": {
+    "gt": 3801,
+    "found": 78.6,
+    "read": 46.9
+   },
+   "upright": {
+    "gt": 2573,
+    "found": 88.5,
+    "read": 54.0
+   }
+  }
+ },
+ "true_boxes_40px": {
+  "H": {
+   "gt": 126,
+   "found": 100.0,
+   "read": 88.1
+  },
+  "P": {
+   "gt": 995,
+   "found": 100.0,
+   "read": 95.1
+  },
+  "Q": {
+   "gt": 3085,
+   "found": 100.0,
+   "read": 64.8
+  },
+  "S": {
+   "gt": 125,
+   "found": 100.0,
+   "read": 94.4
+  },
+  "all": {
+   "gt": 4331,
+   "found": 100.0,
+   "read": 73.3
+  },
+  "arabic": {
+   "gt": 530,
+   "found": 100.0,
+   "read": 91.7
+  },
+  "rotated": {
+   "gt": 1758,
+   "found": 100.0,
+   "read": 73.0
+  },
+  "thai": {
+   "gt": 3801,
+   "found": 100.0,
+   "read": 70.7
+  },
+  "upright": {
+   "gt": 2573,
+   "found": 100.0,
+   "read": 73.5
+  }
+ }
+}

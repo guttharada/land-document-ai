@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ตรวจเลขที่ดิน (ต้นแบบ)</title>
+<style>
+:root{--bg:#f5f6f4;--card:#fff;--ink:#1d2521;--mute:#5d6963;--line:#d9dfdb;--main:#17604a;--warn:#8a4b00;--warnbg:#fff3e0;--ok:#17604a;--okbg:#e6f3ed}
+@media (prefers-color-scheme:dark){:root{--bg:#151917;--card:#1e2421;--ink:#e8eeea;--mute:#9aa7a0;--line:#333c37;--main:#6cc5a4;--warn:#ffc278;--warnbg:#3a2a12;--ok:#8fdcbf;--okbg:#16342a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Sukhumvit Set","Thonburi",system-ui,sans-serif}
+header{padding:14px 20px;border-bottom:1px solid var(--line);background:var(--card);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+h1{font-size:19px;margin:0}
+header span{color:var(--warn);font-size:14px}
+main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;padding:18px 20px;max-width:1500px;margin:auto}
+@media (max-width:900px){main{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px}
+#drop{border:2px dashed var(--line);border-radius:10px;padding:70px 20px;text-align:center;color:var(--mute)}
+#drop.on{border-color:var(--main)}
+#stage{position:relative;display:none}
+#stage.draw{cursor:crosshair}
+#stage img{width:100%;display:block;border-radius:6px}
+#stage svg{position:absolute;inset:0;width:100%;height:100%}
+button{font:inherit;padding:9px 14px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;min-height:42px}
+button.main{background:var(--main);border-color:var(--main);color:var(--card);font-weight:600;width:100%}
+button.on{border-color:var(--main);box-shadow:inset 0 0 0 1px var(--main)}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--main);outline-offset:2px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+label{display:block;font-size:14px;color:var(--mute);margin:14px 0 4px}
+#value{font:600 28px/1.3 inherit;width:100%;padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.msg{padding:10px 12px;border-radius:8px;background:var(--warnbg);color:var(--warn);font-size:15px}
+.msg.ok{background:var(--okbg);color:var(--ok)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;margin:14px 0 0;font-size:15px}
+dt{color:var(--mute)}dd{margin:0}
+.check{display:flex;gap:9px;align-items:flex-start;color:var(--ink);font-size:14px}
+.check input{margin-top:4px;width:18px;height:18px}
+.small{font-size:13.5px;color:var(--mute);margin:12px 0 0}
+polygon.hit{cursor:pointer}
+</style>
+</head>
+<body>
+<header><h1>ตรวจเลขที่ดิน</h1><span>ต้นแบบ: ค่าที่ระบบเสนอยังผิดบ่อย ต้องให้คนตรวจทุกครั้ง</span></header>
+<main>
+<section class="card">
+  <div class="tools">
+    <button id="open">เปิดภาพโฉนด</button>
+    <button id="mMap" disabled>ลากกรอบแผนที่</button>
+    <button id="mHead" disabled>ลากกรอบช่องเลขที่ดิน</button>
+    <input id="file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+  </div>
+  <div id="drop">ลากภาพมาวางที่นี่ หรือกด “เปิดภาพโฉนด”<br><span class="small">ภาพอยู่ในเครื่องนี้เท่านั้น แนะนำความกว้าง 1,200 px ขึ้นไป หนึ่งใบต่อภาพ</span></div>
+  <div id="stage"><img id="img" alt="ภาพโฉนดที่เปิด"><svg id="svg"></svg></div>
+</section>
+<aside class="card">
+  <div id="msg" class="msg" role="status">ยังไม่ได้เปิดภาพ</div>
+  <dl id="info"></dl>
+  <label for="value">เลขที่ดินที่ถูกต้อง</label>
+  <input id="value" inputmode="numeric" autocomplete="off" maxlength="6" disabled>
+  <p class="small">กดกรอบสีแดงบนภาพเพื่อเลือกเลขอื่น หรือพิมพ์แก้เอง ใช้เลขไทยหรืออารบิกก็ได้</p>
+  <label class="check"><input id="consent" type="checkbox"> <span>เจ้าของเอกสารยินยอมให้เก็บ<b>ภาพเฉพาะตัวเลข</b>และค่าที่ถูก ไว้ฝึกระบบบนเครื่องนี้</span></label>
+  <p><button id="save" class="main" disabled>ยืนยันเลขที่ดิน</button></p>
+  <p id="done" class="small" role="status"></p>
+</aside>
+</main>
+<script>
+const $=id=>document.getElementById(id),NS="http://www.w3.org/2000/svg";
+const TH="๐๑๒๓๔๕๖๗๘๙";
+let fresh=true,R=null,pick=null,mode=null,userMap=null,userHead=null,busy=false;
+const col={parcel:"#d92d20",struck:"#0aa0c0",marker:"#17803d"};
+
+function say(t,ok){$("msg").textContent=t;$("msg").className="msg"+(ok?" ok":"")}
+async function post(path,body,json){
+  const r=await fetch(path,{method:"POST",headers:{"X-App":"deed",...(json?{"Content-Type":"application/json"}:{})},body:json?JSON.stringify(body):body});
+  const d=await r.json();if(!r.ok)throw new Error(d.error||"ผิดพลาด");return d}
+function setBusy(b){busy=b;for(const i of["open","mMap","mHead","save"])$(i).disabled=b||(i!=="open"&&!R)}
+
+async function load(f){
+  if(!f||busy)return;
+  R=null;pick=null;userMap=userHead=null;setMode(null);$("done").textContent="";$("value").value="";$("value").disabled=true;$("info").replaceChildren();$("svg").replaceChildren();
+  $("consent").checked=false;
+  $("img").src=URL.createObjectURL(f);$("drop").style.display="none";$("stage").style.display="block";
+  await work(()=>post("/api/read",f))}
+async function work(fn){
+  setBusy(true);say("กำลังอ่าน...");
+  try{R=await fn();pick=R.target;fresh=true;show()}catch(e){say(e.message)}finally{setBusy(false)}}
+function again(){work(()=>post("/api/again",{id:R.id,map:userMap,head:userHead},true))}
+
+function show(){
+  say(R.advice);
+  const b=pick===null?null:R.boxes[pick],rows=[
+    ["ในแผนที่",b?b.text||"อ่านไม่ออก":"หาไม่เจอ",b&&b.value],
+    ["ในหัวโฉนด",R.head?R.head.text||"อ่านไม่ออก":"หาไม่เจอ ลากกรอบเองได้",R.head&&R.head.value],
+    ["หลักเขตที่เจอ",R.boxes.filter(x=>x.cls==="marker").length+" จุด"],
+    ["กรอบแผนที่",R.source.map],["กรอบหัวโฉนด",R.source.head]];
+  $("info").replaceChildren(...rows.flatMap(([k,v,use])=>{const a=document.createElement("dt"),c=document.createElement("dd");a.textContent=k;c.textContent=v;
+    if(use){const u=document.createElement("button");u.textContent="ใช้ "+use;u.style.cssText="min-height:32px;padding:3px 10px;margin-left:10px";u.onclick=()=>{$("value").value=use;$("value").focus()};c.append(u)}
+    return[a,c]}));
+  const had=$("value").disabled;$("value").disabled=false;
+  if(had||fresh)$("value").value="";   // never prefill: map and header can be wrong in the same way
+  fresh=false;draw()}
+function el(n,a){const e=document.createElementNS(NS,n);for(const k in a)e.setAttribute(k,a[k]);return e}
+function rect(b,c){return el("rect",{x:b[0],y:b[1],width:b[2]-b[0],height:b[3]-b[1],fill:"none",stroke:c,"stroke-width":R.size[0]/400,"stroke-dasharray":R.size[0]/90})}
+function draw(){
+  const s=$("svg"),w=R.size[0]/420;s.setAttribute("viewBox",`0 0 ${R.size[0]} ${R.size[1]}`);s.replaceChildren();
+  s.append(rect(R.map_box,"#6b4fd8"));if(R.head_box)s.append(rect(R.head_box,"#c2410c"));
+  R.boxes.forEach((b,i)=>{if(!col[b.cls])return;
+    const p=el("polygon",{points:b.quad.map(q=>q.join()).join(" "),fill:i===pick?"rgba(217,45,32,.18)":"transparent",stroke:col[b.cls],"stroke-width":i===pick?w*1.8:w});
+    if(b.cls!=="marker"){p.setAttribute("class","hit");p.addEventListener("click",()=>{if(mode)return;pick=i;show();$("value").value=b.value});
+      const t=el("text",{x:b.quad.reduce((m,q)=>Math.min(m,q[0]),1e9),y:b.quad.reduce((m,q)=>Math.min(m,q[1]),1e9)-w*2,fill:col[b.cls],"font-size":w*8,"font-weight":600});t.textContent=b.text;s.append(t)}
+    s.append(p)})}
+
+function setMode(m){mode=m;$("mMap").classList.toggle("on",m==="map");$("mHead").classList.toggle("on",m==="head");$("stage").classList.toggle("draw",!!m)}
+$("mMap").onclick=()=>setMode(mode==="map"?null:"map");
+$("mHead").onclick=()=>setMode(mode==="head"?null:"head");
+let start=null,ghost=null;
+function pt(e){const r=$("svg").getBoundingClientRect();return[(e.clientX-r.left)/r.width*R.size[0],(e.clientY-r.top)/r.height*R.size[1]]}
+$("svg").addEventListener("pointerdown",e=>{if(!mode||!R||busy)return;e.preventDefault();start=pt(e);$("svg").setPointerCapture(e.pointerId)});
+$("svg").addEventListener("pointermove",e=>{if(!start)return;const p=pt(e);ghost?.remove();ghost=rect([Math.min(p[0],start[0]),Math.min(p[1],start[1]),Math.max(p[0],start[0]),Math.max(p[1],start[1])],"#111");$("svg").append(ghost)});
+$("svg").addEventListener("pointerup",e=>{if(!start)return;const p=pt(e),b=[Math.min(p[0],start[0]),Math.min(p[1],start[1]),Math.max(p[0],start[0]),Math.max(p[1],start[1])];start=null;ghost?.remove();ghost=null;
+  if(b[2]-b[0]<8||b[3]-b[1]<8)return;if(mode==="map")userMap=b;else userHead=b;
+  setMode(null);again()});
+
+$("open").onclick=()=>$("file").click();
+$("file").onchange=e=>{load(e.target.files[0]);e.target.value=""};
+for(const n of["dragover","dragleave","drop"])document.addEventListener(n,e=>{e.preventDefault();$("drop").classList.toggle("on",n==="dragover");if(n==="drop")load(e.dataTransfer.files[0])});
+$("save").onclick=async()=>{
+  setBusy(true);
+  try{const d=await post("/api/save",{id:R.id,value:$("value").value,box:pick,consent:$("consent").checked},true);
+    $("done").textContent=d.saved?(d.crop?"ยืนยันแล้ว เก็บภาพตัวเลขและค่าที่ถูกไว้ฝึก":"ยืนยันแล้ว เก็บเฉพาะค่า เพราะไม่ได้เลือกกรอบตัวเลข"):"ยืนยันแล้ว ไม่ได้เก็บข้อมูลใด"}
+  catch(e){$("done").textContent=e.message}finally{setBusy(false)}};
+</script>
+</body>
+</html>

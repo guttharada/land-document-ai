@@ -1,0 +1,951 @@
+{
+ "val_n": 1200,
+ "val": {
+  "base (pad .25, 64px)": {
+   "arabic": [
+    178,
+    94.4
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    54.5
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    94.6
+   ],
+   "thai": [
+    1022,
+    64.4
+   ],
+   "thai H": [
+    236,
+    69.1
+   ],
+   "thai P": [
+    243,
+    72.0
+   ],
+   "thai Q": [
+    278,
+    50.0
+   ],
+   "thai S": [
+    265,
+    68.3
+   ],
+   "thai rotated": [
+    218,
+    61.0
+   ],
+   "thai upright": [
+    804,
+    65.3
+   ]
+  },
+  "40px": {
+   "arabic": [
+    178,
+    95.5
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    63.6
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    95.9
+   ],
+   "thai": [
+    1022,
+    77.8
+   ],
+   "thai H": [
+    236,
+    77.5
+   ],
+   "thai P": [
+    243,
+    89.3
+   ],
+   "thai Q": [
+    278,
+    56.1
+   ],
+   "thai S": [
+    265,
+    90.2
+   ],
+   "thai rotated": [
+    218,
+    74.3
+   ],
+   "thai upright": [
+    804,
+    78.7
+   ]
+  },
+  "96px": {
+   "arabic": [
+    178,
+    95.5
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    63.6
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    90.0
+   ],
+   "arabic upright": [
+    148,
+    96.6
+   ],
+   "thai": [
+    1022,
+    66.6
+   ],
+   "thai H": [
+    236,
+    70.3
+   ],
+   "thai P": [
+    243,
+    74.5
+   ],
+   "thai Q": [
+    278,
+    52.5
+   ],
+   "thai S": [
+    265,
+    70.9
+   ],
+   "thai rotated": [
+    218,
+    60.6
+   ],
+   "thai upright": [
+    804,
+    68.3
+   ]
+  },
+  "pad .6": {
+   "arabic": [
+    178,
+    96.6
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    77.3
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    90.0
+   ],
+   "arabic upright": [
+    148,
+    98.0
+   ],
+   "thai": [
+    1022,
+    71.7
+   ],
+   "thai H": [
+    236,
+    75.4
+   ],
+   "thai P": [
+    243,
+    77.4
+   ],
+   "thai Q": [
+    278,
+    55.4
+   ],
+   "thai S": [
+    265,
+    80.4
+   ],
+   "thai rotated": [
+    218,
+    64.7
+   ],
+   "thai upright": [
+    804,
+    73.6
+   ]
+  },
+  "context 1.0": {
+   "arabic": [
+    178,
+    95.5
+   ],
+   "arabic H": [
+    64,
+    95.3
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    81.8
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    100.0
+   ],
+   "arabic upright": [
+    148,
+    94.6
+   ],
+   "thai": [
+    1022,
+    74.1
+   ],
+   "thai H": [
+    236,
+    68.6
+   ],
+   "thai P": [
+    243,
+    86.0
+   ],
+   "thai Q": [
+    278,
+    57.2
+   ],
+   "thai S": [
+    265,
+    85.7
+   ],
+   "thai rotated": [
+    218,
+    71.1
+   ],
+   "thai upright": [
+    804,
+    74.9
+   ]
+  },
+  "context 2.0": {
+   "arabic": [
+    178,
+    96.1
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    96.5
+   ],
+   "arabic Q": [
+    22,
+    77.3
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    96.6
+   ],
+   "thai": [
+    1022,
+    68.7
+   ],
+   "thai H": [
+    236,
+    65.3
+   ],
+   "thai P": [
+    243,
+    79.4
+   ],
+   "thai Q": [
+    278,
+    47.8
+   ],
+   "thai S": [
+    265,
+    83.8
+   ],
+   "thai rotated": [
+    218,
+    61.0
+   ],
+   "thai upright": [
+    804,
+    70.8
+   ]
+  },
+  "context 2.0, 40px": {
+   "arabic": [
+    178,
+    96.1
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    72.7
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    96.6
+   ],
+   "thai": [
+    1022,
+    72.3
+   ],
+   "thai H": [
+    236,
+    75.0
+   ],
+   "thai P": [
+    243,
+    77.8
+   ],
+   "thai Q": [
+    278,
+    50.4
+   ],
+   "thai S": [
+    265,
+    87.9
+   ],
+   "thai rotated": [
+    218,
+    62.4
+   ],
+   "thai upright": [
+    804,
+    75.0
+   ]
+  },
+  "autocontrast": {
+   "arabic": [
+    178,
+    96.1
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    72.7
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    90.0
+   ],
+   "arabic upright": [
+    148,
+    97.3
+   ],
+   "thai": [
+    1022,
+    61.8
+   ],
+   "thai H": [
+    236,
+    61.4
+   ],
+   "thai P": [
+    243,
+    71.2
+   ],
+   "thai Q": [
+    278,
+    51.8
+   ],
+   "thai S": [
+    265,
+    64.2
+   ],
+   "thai rotated": [
+    218,
+    59.6
+   ],
+   "thai upright": [
+    804,
+    62.4
+   ]
+  },
+  "thai only": {
+   "arabic": [
+    178,
+    94.4
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    54.5
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    94.6
+   ],
+   "thai": [
+    1022,
+    64.4
+   ],
+   "thai H": [
+    236,
+    69.1
+   ],
+   "thai P": [
+    243,
+    72.0
+   ],
+   "thai Q": [
+    278,
+    50.0
+   ],
+   "thai S": [
+    265,
+    68.3
+   ],
+   "thai rotated": [
+    218,
+    61.0
+   ],
+   "thai upright": [
+    804,
+    65.3
+   ]
+  },
+  "thai word anchor": {
+   "arabic": [
+    178,
+    97.2
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    77.3
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    98.0
+   ],
+   "thai": [
+    1022,
+    74.9
+   ],
+   "thai H": [
+    236,
+    79.2
+   ],
+   "thai P": [
+    243,
+    80.7
+   ],
+   "thai Q": [
+    278,
+    55.0
+   ],
+   "thai S": [
+    265,
+    86.4
+   ],
+   "thai rotated": [
+    218,
+    67.4
+   ],
+   "thai upright": [
+    804,
+    76.9
+   ]
+  },
+  "anchor + thai only": {
+   "arabic": [
+    178,
+    97.2
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    77.3
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    98.0
+   ],
+   "thai": [
+    1022,
+    74.9
+   ],
+   "thai H": [
+    236,
+    79.2
+   ],
+   "thai P": [
+    243,
+    80.7
+   ],
+   "thai Q": [
+    278,
+    55.0
+   ],
+   "thai S": [
+    265,
+    86.4
+   ],
+   "thai rotated": [
+    218,
+    67.4
+   ],
+   "thai upright": [
+    804,
+    76.9
+   ]
+  },
+  "anchor, 40px": {
+   "arabic": [
+    178,
+    96.6
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    100.0
+   ],
+   "arabic Q": [
+    22,
+    72.7
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    93.3
+   ],
+   "arabic upright": [
+    148,
+    97.3
+   ],
+   "thai": [
+    1022,
+    74.4
+   ],
+   "thai H": [
+    236,
+    77.1
+   ],
+   "thai P": [
+    243,
+    80.7
+   ],
+   "thai Q": [
+    278,
+    57.2
+   ],
+   "thai S": [
+    265,
+    84.2
+   ],
+   "thai rotated": [
+    218,
+    66.1
+   ],
+   "thai upright": [
+    804,
+    76.6
+   ]
+  },
+  "anchor, pad .6": {
+   "arabic": [
+    178,
+    96.1
+   ],
+   "arabic H": [
+    64,
+    100.0
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    72.7
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    90.0
+   ],
+   "arabic upright": [
+    148,
+    97.3
+   ],
+   "thai": [
+    1022,
+    75.7
+   ],
+   "thai H": [
+    236,
+    79.7
+   ],
+   "thai P": [
+    243,
+    83.1
+   ],
+   "thai Q": [
+    278,
+    52.9
+   ],
+   "thai S": [
+    265,
+    89.4
+   ],
+   "thai rotated": [
+    218,
+    67.0
+   ],
+   "thai upright": [
+    804,
+    78.1
+   ]
+  },
+  "anchor, pad .6, 40px": {
+   "arabic": [
+    178,
+    95.5
+   ],
+   "arabic H": [
+    64,
+    98.4
+   ],
+   "arabic P": [
+    57,
+    98.2
+   ],
+   "arabic Q": [
+    22,
+    72.7
+   ],
+   "arabic S": [
+    35,
+    100.0
+   ],
+   "arabic rotated": [
+    30,
+    90.0
+   ],
+   "arabic upright": [
+    148,
+    96.6
+   ],
+   "thai": [
+    1022,
+    76.4
+   ],
+   "thai H": [
+    236,
+    78.0
+   ],
+   "thai P": [
+    243,
+    82.7
+   ],
+   "thai Q": [
+    278,
+    56.5
+   ],
+   "thai S": [
+    265,
+    90.2
+   ],
+   "thai rotated": [
+    218,
+    67.9
+   ],
+   "thai upright": [
+    804,
+    78.7
+   ]
+  }
+ },
+ "val_score": {
+  "base (pad .25, 64px)": 64.85,
+  "40px": 78.275,
+  "96px": 67.05,
+  "pad .6": 72.15,
+  "context 1.0": 74.375,
+  "context 2.0": 69.075,
+  "context 2.0, 40px": 72.775,
+  "autocontrast": 62.15,
+  "thai only": 64.85,
+  "thai word anchor": 75.325,
+  "anchor + thai only": 75.325,
+  "anchor, 40px": 74.8,
+  "anchor, pad .6": 76.275,
+  "anchor, pad .6, 40px": 76.85
+ },
+ "best": "40px",
+ "test_n": 2866,
+ "test_best": {
+  "arabic": [
+   353,
+   97.7
+  ],
+  "arabic H": [
+   55,
+   100.0
+  ],
+  "arabic P": [
+   90,
+   100.0
+  ],
+  "arabic Q": [
+   150,
+   94.7
+  ],
+  "arabic S": [
+   58,
+   100.0
+  ],
+  "arabic rotated": [
+   76,
+   97.4
+  ],
+  "arabic upright": [
+   277,
+   97.8
+  ],
+  "thai": [
+   2513,
+   83.6
+  ],
+  "thai H": [
+   377,
+   83.6
+  ],
+  "thai P": [
+   910,
+   90.0
+  ],
+  "thai Q": [
+   850,
+   72.8
+  ],
+  "thai S": [
+   376,
+   92.8
+  ],
+  "thai rotated": [
+   760,
+   80.9
+  ],
+  "thai upright": [
+   1753,
+   84.8
+  ]
+ },
+ "test_base": {
+  "arabic": [
+   353,
+   97.2
+  ],
+  "arabic H": [
+   55,
+   100.0
+  ],
+  "arabic P": [
+   90,
+   100.0
+  ],
+  "arabic Q": [
+   150,
+   93.3
+  ],
+  "arabic S": [
+   58,
+   100.0
+  ],
+  "arabic rotated": [
+   76,
+   93.4
+  ],
+  "arabic upright": [
+   277,
+   98.2
+  ],
+  "thai": [
+   2513,
+   72.5
+  ],
+  "thai H": [
+   377,
+   80.4
+  ],
+  "thai P": [
+   910,
+   77.0
+  ],
+  "thai Q": [
+   850,
+   60.7
+  ],
+  "thai S": [
+   376,
+   80.6
+  ],
+  "thai rotated": [
+   760,
+   66.6
+  ],
+  "thai upright": [
+   1753,
+   75.1
+  ]
+ }
+}

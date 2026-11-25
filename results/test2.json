@@ -1,0 +1,331 @@
+{
+ "split": "test2",
+ "pages": 200,
+ "conf": 0.25,
+ "detection": {
+  "area": {
+   "gt": 5168,
+   "predicted": 5181,
+   "right": 5155,
+   "recall": 99.75,
+   "precision": 99.5,
+   "f1": 99.62
+  },
+  "area P": {
+   "gt": 1264,
+   "predicted": 1265,
+   "right": 1264,
+   "recall": 100.0,
+   "precision": 99.92,
+   "f1": 99.96
+  },
+  "area Q": {
+   "gt": 3904,
+   "predicted": 3916,
+   "right": 3891,
+   "recall": 99.67,
+   "precision": 99.36,
+   "f1": 99.51
+  },
+  "length": {
+   "gt": 3112,
+   "predicted": 3112,
+   "right": 3111,
+   "recall": 99.97,
+   "precision": 99.97,
+   "f1": 99.97
+  },
+  "length H": {
+   "gt": 89,
+   "predicted": 90,
+   "right": 89,
+   "recall": 100.0,
+   "precision": 98.89,
+   "f1": 99.44
+  },
+  "length P": {
+   "gt": 1354,
+   "predicted": 1354,
+   "right": 1354,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "length Q": {
+   "gt": 1588,
+   "predicted": 1587,
+   "right": 1587,
+   "recall": 99.94,
+   "precision": 100.0,
+   "f1": 99.97
+  },
+  "length S": {
+   "gt": 81,
+   "predicted": 81,
+   "right": 81,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "marker": {
+   "gt": 8401,
+   "predicted": 8401,
+   "right": 8401,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "marker H": {
+   "gt": 309,
+   "predicted": 309,
+   "right": 309,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "marker P": {
+   "gt": 3005,
+   "predicted": 3005,
+   "right": 3005,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "marker Q": {
+   "gt": 4769,
+   "predicted": 4769,
+   "right": 4769,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "marker S": {
+   "gt": 318,
+   "predicted": 318,
+   "right": 318,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "parcel": {
+   "gt": 7123,
+   "predicted": 7124,
+   "right": 7118,
+   "recall": 99.93,
+   "precision": 99.92,
+   "f1": 99.92
+  },
+  "parcel H": {
+   "gt": 230,
+   "predicted": 234,
+   "right": 230,
+   "recall": 100.0,
+   "precision": 98.29,
+   "f1": 99.14
+  },
+  "parcel P": {
+   "gt": 1590,
+   "predicted": 1590,
+   "right": 1590,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "parcel Q": {
+   "gt": 5094,
+   "predicted": 5091,
+   "right": 5089,
+   "recall": 99.9,
+   "precision": 99.96,
+   "f1": 99.93
+  },
+  "parcel S": {
+   "gt": 209,
+   "predicted": 209,
+   "right": 209,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "struck": {
+   "gt": 638,
+   "predicted": 624,
+   "right": 623,
+   "recall": 97.65,
+   "precision": 99.84,
+   "f1": 98.73
+  },
+  "struck H": {
+   "gt": 5,
+   "predicted": 2,
+   "right": 2,
+   "recall": 40.0,
+   "precision": 100.0,
+   "f1": 57.14
+  },
+  "struck Q": {
+   "gt": 633,
+   "predicted": 622,
+   "right": 621,
+   "recall": 98.1,
+   "precision": 99.84,
+   "f1": 98.96
+  },
+  "text": {
+   "gt": 1393,
+   "predicted": 1285,
+   "right": 1278,
+   "recall": 91.74,
+   "precision": 99.46,
+   "f1": 95.44
+  },
+  "text H": {
+   "gt": 317,
+   "predicted": 286,
+   "right": 283,
+   "recall": 89.27,
+   "precision": 98.95,
+   "f1": 93.86
+  },
+  "text P": {
+   "gt": 332,
+   "predicted": 306,
+   "right": 305,
+   "recall": 91.87,
+   "precision": 99.67,
+   "f1": 95.61
+  },
+  "text Q": {
+   "gt": 419,
+   "predicted": 392,
+   "right": 391,
+   "recall": 93.32,
+   "precision": 99.74,
+   "f1": 96.42
+  },
+  "text S": {
+   "gt": 325,
+   "predicted": 301,
+   "right": 299,
+   "recall": 92.0,
+   "precision": 99.34,
+   "f1": 95.53
+  }
+ },
+ "end_to_end": {
+  "H": {
+   "gt": 230,
+   "predicted": 234,
+   "right": 228,
+   "recall": 99.13,
+   "precision": 97.44,
+   "f1": 98.28
+  },
+  "P": {
+   "gt": 1590,
+   "predicted": 1590,
+   "right": 1588,
+   "recall": 99.87,
+   "precision": 99.87,
+   "f1": 99.87
+  },
+  "Q": {
+   "gt": 5094,
+   "predicted": 5091,
+   "right": 4920,
+   "recall": 96.58,
+   "precision": 96.64,
+   "f1": 96.61
+  },
+  "S": {
+   "gt": 209,
+   "predicted": 209,
+   "right": 209,
+   "recall": 100.0,
+   "precision": 100.0,
+   "f1": 100.0
+  },
+  "all": {
+   "gt": 7123,
+   "predicted": 7124,
+   "right": 6945,
+   "recall": 97.5,
+   "precision": 97.49,
+   "f1": 97.49
+  },
+  "arabic": {
+   "gt": 496,
+   "predicted": 496,
+   "right": 481,
+   "recall": 96.98,
+   "precision": 96.98,
+   "f1": 96.98
+  },
+  "thai": {
+   "gt": 6627,
+   "predicted": 6628,
+   "right": 6464,
+   "recall": 97.54,
+   "precision": 97.53,
+   "f1": 97.53
+  }
+ },
+ "digit_accuracy_on_found": 99.13,
+ "page_perfect": {
+  "all": {
+   "pages": 200,
+   "accuracy": 73.5
+  },
+  "S": {
+   "pages": 50,
+   "accuracy": 100.0
+  },
+  "target (true position)": {
+   "pages": 100,
+   "accuracy": 100.0
+  },
+  "H": {
+   "pages": 50,
+   "accuracy": 92.0
+  },
+  "P": {
+   "pages": 50,
+   "accuracy": 96.0
+  },
+  "Q": {
+   "pages": 50,
+   "accuracy": 6.0
+  }
+ },
+ "struck_out_filed_as_parcel": {
+  "called_parcel": 4,
+  "total": 638
+ },
+ "by_confidence": {
+  "0": {
+   "kept": 7124,
+   "coverage": 97.5,
+   "wrong": 2.51
+  },
+  "0.8": {
+   "kept": 7061,
+   "coverage": 96.9,
+   "wrong": 2.25
+  },
+  "0.9": {
+   "kept": 6272,
+   "coverage": 86.8,
+   "wrong": 1.43
+  },
+  "0.95": {
+   "kept": 5347,
+   "coverage": 74.3,
+   "wrong": 0.97
+  },
+  "0.99": {
+   "kept": 3956,
+   "coverage": 55.2,
+   "wrong": 0.63
+  }
+ }
+}

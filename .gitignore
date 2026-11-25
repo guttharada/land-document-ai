@@ -1,0 +1,22 @@
+# private: real deeds and people's handwriting never go to Git
+feedback/
+real/
+deeds/
+*.webp
+*.pdf
+/*.png
+/*.jpg
+/*.jpeg
+
+# rebuilt by scripts
+.venv/
+data*/
+colab/*.zip
+preds*.json
+vision_ocr
+runs/
+
+__pycache__/
+*.pyc
+.DS_Store
+.claude/settings.local.json

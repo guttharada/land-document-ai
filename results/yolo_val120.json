@@ -1,0 +1,281 @@
+{
+ "split": "val",
+ "pages": 120,
+ "pages_without_prediction": 280,
+ "conf": 0.25,
+ "detection": {
+  "area": {
+   "gt": 3210,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "area H": {
+   "gt": 0,
+   "recall": null,
+   "precision": null
+  },
+  "area P": {
+   "gt": 776,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "area Q": {
+   "gt": 2434,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "area S": {
+   "gt": 0,
+   "recall": null,
+   "precision": null
+  },
+  "length": {
+   "gt": 1985,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "length H": {
+   "gt": 55,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "length P": {
+   "gt": 775,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "length Q": {
+   "gt": 1104,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "length S": {
+   "gt": 51,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "marker": {
+   "gt": 5174,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "marker H": {
+   "gt": 177,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "marker P": {
+   "gt": 1887,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "marker Q": {
+   "gt": 2931,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "marker S": {
+   "gt": 179,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "parcel": {
+   "gt": 4331,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "parcel H": {
+   "gt": 126,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "parcel P": {
+   "gt": 995,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "parcel Q": {
+   "gt": 3085,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "parcel S": {
+   "gt": 125,
+   "recall": 100.0,
+   "precision": 99.2
+  },
+  "struck": {
+   "gt": 361,
+   "recall": 99.4,
+   "precision": 100.0
+  },
+  "struck H": {
+   "gt": 2,
+   "recall": 100.0,
+   "precision": 100.0
+  },
+  "struck P": {
+   "gt": 0,
+   "recall": null,
+   "precision": null
+  },
+  "struck Q": {
+   "gt": 359,
+   "recall": 99.4,
+   "precision": 100.0
+  },
+  "struck S": {
+   "gt": 0,
+   "recall": null,
+   "precision": null
+  },
+  "text": {
+   "gt": 823,
+   "recall": 88.0,
+   "precision": 98.9
+  },
+  "text H": {
+   "gt": 186,
+   "recall": 86.6,
+   "precision": 97.6
+  },
+  "text P": {
+   "gt": 206,
+   "recall": 88.8,
+   "precision": 99.5
+  },
+  "text Q": {
+   "gt": 242,
+   "recall": 90.5,
+   "precision": 98.6
+  },
+  "text S": {
+   "gt": 189,
+   "recall": 85.2,
+   "precision": 100.0
+  }
+ },
+ "parcel": {
+  "H": {
+   "gt": 126,
+   "found": 100.0,
+   "read": 85.7
+  },
+  "P": {
+   "gt": 995,
+   "found": 100.0,
+   "read": 95.4
+  },
+  "Q": {
+   "gt": 3085,
+   "found": 100.0,
+   "read": 64.1
+  },
+  "S": {
+   "gt": 125,
+   "found": 100.0,
+   "read": 93.6
+  },
+  "all": {
+   "gt": 4331,
+   "found": 100.0,
+   "read": 72.7
+  },
+  "arabic": {
+   "gt": 530,
+   "found": 100.0,
+   "read": 92.5
+  },
+  "rotated": {
+   "gt": 1758,
+   "found": 99.9,
+   "read": 71.7
+  },
+  "thai": {
+   "gt": 3801,
+   "found": 100.0,
+   "read": 70.0
+  },
+  "upright": {
+   "gt": 2573,
+   "found": 100.0,
+   "read": 73.5
+  }
+ },
+ "called": {
+  "n": 4332,
+  "right": 3150,
+  "in_reg": 3254,
+  "in_reg_right": 3150,
+  "precision": 72.7,
+  "wrong_if_in_registry": 3.2
+ },
+ "misreads": {
+  "wrong length": 301,
+  "right length, wrong digit": 527,
+  "no digits read": 352
+ },
+ "confusions": [
+  [
+   "4",
+   "5",
+   106
+  ],
+  [
+   "8",
+   "4",
+   75
+  ],
+  [
+   "8",
+   "5",
+   66
+  ],
+  [
+   "3",
+   "n",
+   56
+  ],
+  [
+   "3",
+   "ต",
+   52
+  ],
+  [
+   "1",
+   "0",
+   48
+  ],
+  [
+   "9",
+   "7",
+   44
+  ],
+  [
+   "6",
+   "อ",
+   42
+  ],
+  [
+   "0",
+   "o",
+   36
+  ],
+  [
+   "3",
+   "7",
+   24
+  ],
+  [
+   "9",
+   "0",
+   19
+  ],
+  [
+   "6",
+   "0",
+   13
+  ]
+ ],
+ "note": "registry lookup uses the TRUE tambon, so this is slightly optimistic"
+}
