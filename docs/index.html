@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; connect-src 'self'; img-src 'self' blob:; style-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="robots" content="noindex">
+<title>เดโมอ่านเลขที่ดิน</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>เดโมอ่านเลขที่ดินจากแผนที่</h1>
+  <p>โมเดลทำงานในเบราว์เซอร์ของคุณ ภาพไม่ถูกส่งออกและไม่ถูกเก็บ</p>
+</header>
+<p class="warn"><b>งานทดลอง ไม่ใช่ระบบราชการ</b> โมเดลฝึกจากภาพจำลองเท่านั้น กับโฉนดจริงยังอ่านผิดบ่อยแม้ความมั่นใจสูง ห้ามใช้แทนการตรวจของคน</p>
+<main>
+<section class="card" aria-label="ภาพ">
+  <div class="tools">
+    <button id="open" class="main">เลือกรูป</button>
+    <span class="sep">หรือลองภาพจำลอง</span>
+    <button data-s="S">ตัวพิมพ์</button>
+    <button data-s="H">ลายมือจำลอง</button>
+    <button data-s="P">ผังแบ่งแปลง</button>
+    <button data-s="Q">ผังเก่าแน่น</button>
+    <input id="file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+  </div>
+  <div id="drop">ลากรูปมาวางที่นี่ หรือกดภาพจำลองด้านบน<br><small>JPG, PNG หรือ WEBP แนะนำความกว้าง 1,200 px ขึ้นไป หนึ่งแผ่นต่อภาพ</small></div>
+  <div id="stage" hidden><img id="img" alt="ภาพที่กำลังอ่าน"><svg id="svg" aria-hidden="true"></svg></div>
+  <div class="tools below" id="opts" hidden>
+    <button id="area" aria-pressed="false">ลากเลือกเฉพาะแผนที่</button>
+    <button id="whole" hidden>ใช้ทั้งภาพ</button>
+    <label><input type="checkbox" id="multi"> ลองหลายขนาด (ช้ากว่า)</label>
+    <button id="again">อ่านใหม่</button>
+  </div>
+</section>
+<aside class="card" aria-label="ผล">
+  <p id="msg" role="status">ยังไม่มีภาพ</p>
+  <progress id="bar" max="1" value="0" hidden></progress>
+  <div id="result" hidden>
+    <h2>เลขที่ดินที่อ่านได้ <span id="count"></span></h2>
+    <ul id="list"></ul>
+    <h2>สิ่งอื่นที่หาเจอ</h2>
+    <ul id="legend"></ul>
+    <p id="time" class="small"></p>
+  </div>
+</aside>
+</main>
+<footer>
+  <p>ภาพจำลองสร้างด้วยโปรแกรม ชื่อและเลขแต่งขึ้นทั้งหมด และมาจากตัวสร้างเดียวกับภาพที่ใช้ฝึก ผลจึงดีกว่าของจริงมาก</p>
+  <p><a href="https://github.com/guttharada/land-document-ai/tree/web-demo">ซอร์สโค้ด (AGPL-3.0)</a> · ใช้เพื่อการศึกษา</p>
+</footer>
+<script type="module" src="demo.js"></script>
+</body>
+</html>

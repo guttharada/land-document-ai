@@ -1,0 +1,45 @@
+:root{--bg:#f5f6f4;--card:#fff;--ink:#1d2521;--mute:#55615b;--line:#d3dad6;--main:#17604a;--on:#fff;--warn:#7a4200;--warnbg:#fff1dd;--sel:#e6f3ed}
+@media (prefers-color-scheme:dark){:root{--bg:#151917;--card:#1e2421;--ink:#e8eeea;--mute:#a3b0a9;--line:#36403b;--main:#6cc5a4;--on:#10201a;--warn:#ffc98a;--warnbg:#37280f;--sel:#193a2e}}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Sukhumvit Set","Noto Sans Thai","Leelawadee UI",Thonburi,system-ui,sans-serif}
+header,main,footer,.warn{max-width:1400px;margin:0 auto;padding:0 20px}
+header{padding-top:20px}
+h1{font-size:24px;line-height:1.35;margin:0}
+header p{margin:2px 0 14px;color:var(--mute)}
+.warn{background:var(--warnbg);color:var(--warn);padding:10px 20px;border-radius:8px;width:calc(100% - 40px)}
+main{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;padding-top:16px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.below{margin:12px 0 0}
+.sep{color:var(--mute);font-size:15px;margin:0 2px 0 6px}
+button{font:inherit;min-height:44px;padding:6px 14px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);cursor:pointer}
+button.main{background:var(--main);border-color:var(--main);color:var(--on);font-weight:600}
+button[aria-pressed=true]{border-color:var(--main);box-shadow:inset 0 0 0 1px var(--main)}
+button:disabled{opacity:.5;cursor:default}
+:focus-visible{outline:3px solid var(--main);outline-offset:2px}
+label{display:flex;gap:8px;align-items:center;min-height:44px}
+label input{width:20px;height:20px;accent-color:var(--main)}
+#drop{border:2px dashed var(--line);border-radius:10px;padding:72px 16px;text-align:center;color:var(--mute)}
+#drop.on,#stage.on{border-color:var(--main)}
+#stage{position:relative}
+#stage img{display:block;width:100%;border-radius:6px}
+#stage svg{position:absolute;inset:0;width:100%;height:100%}
+#stage.draw svg{cursor:crosshair;touch-action:none}
+polygon.hit{cursor:pointer}
+#msg{margin:0}
+progress{width:100%;accent-color:var(--main);margin-top:8px}
+h2{font-size:17px;margin:18px 0 6px}
+ul{list-style:none;margin:0;padding:0}
+#list{max-height:420px;overflow:auto}
+#list button{width:100%;display:flex;justify-content:space-between;gap:10px;align-items:baseline;border-color:transparent;text-align:left}
+#list button:hover{border-color:var(--line)}
+#list button[aria-pressed=true]{background:var(--sel);box-shadow:none;border-color:var(--main)}
+#list b{font-size:20px;font-variant-numeric:tabular-nums}
+#list span{color:var(--mute);font-size:14px}
+#legend li{display:flex;align-items:center;gap:8px;padding:2px 0;font-size:15px}
+#legend i{width:14px;height:14px;border:3px solid;border-radius:3px}
+.small,small,footer{color:var(--mute);font-size:14px}
+footer{padding:10px 20px 28px}
+a{color:var(--main)}
+@media (max-width:860px){main{grid-template-columns:minmax(0,1fr)}h1{font-size:21px}header,main,footer{padding-left:16px;padding-right:16px}.warn{width:calc(100% - 32px);padding:10px 14px}.sep{width:100%;margin:0}#drop{padding:44px 14px}}
