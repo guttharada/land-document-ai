@@ -1,1 +1,28 @@
-{"version":"0.0.1","configurations":[{"name":"deed-prototype","runtimeExecutable":".venv/bin/python","runtimeArgs":["-B","app.py"],"port":8765}]}
+{
+ "version": "0.0.1",
+ "configurations": [
+  {
+   "name": "deed-prototype",
+   "runtimeExecutable": ".venv/bin/python",
+   "runtimeArgs": [
+    "-B",
+    "app.py"
+   ],
+   "port": 8765
+  },
+  {
+   "name": "web-demo",
+   "runtimeExecutable": "python3",
+   "runtimeArgs": [
+    "-m",
+    "http.server",
+    "8770",
+    "--bind",
+    "127.0.0.1",
+    "--directory",
+    "docs"
+   ],
+   "port": 8770
+  }
+ ]
+}

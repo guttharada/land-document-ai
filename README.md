@@ -113,6 +113,7 @@ parcel number was right 35% of the time; requiring all-Thai digits, 85%.
 | File | Purpose |
 |---|---|
 | `app.py`, `app.html`, `pipeline.py` | Local review app and the full pipeline |
+| `docs/`, `export_onnx.py` | Browser demo: both models as ONNX, run with onnxruntime-web (MIT). No server, the image stays in the browser. Try it with `python3 -m http.server 8770 --bind 127.0.0.1 --directory docs` |
 | `best.pt`, `ocr_thai.pt` | Trained YOLO-OBB and digit reader (0.9M parameters) |
 | `generate_v2.py` | Synthetic maps with ground truth (uses helpers from `generate.py`) |
 | `prepare_yolo.py`, `colab/train_yolo_obb.ipynb` | Build the YOLO dataset and train on Colab |
