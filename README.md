@@ -1,200 +1,157 @@
-# Land Document AI: อ่านเลขที่ดินจากเอกสารรังวัด
+# Land Document AI
 
-> **ต้นแบบเพื่อการเรียนรู้ ห้ามใช้ตัดสินกรรมสิทธิ์หรือกรอกข้อมูลโดยไม่มีคนตรวจ** ภาพทั้งหมดใน repo เป็นภาพจำลอง
-> ไม่เกี่ยวข้องกับหน่วยงานใด · License: AGPL-3.0 (ดู `LICENSE`) · ห้ามใส่โฉนดจริงหรือข้อมูลส่วนบุคคลใน issue หรือ pull request
+Finds and reads **parcel numbers** (เลขที่ดิน) on Thai land survey maps and title deeds.
 
-โปรเจกต์ทดลอง: หาและอ่าน **เลขที่ดิน** จากรูปแผนที่แบบเอกสารที่ดินไทย
-มีข้อมูลจำลอง, baseline และ YOLO-OBB ที่เทรนแล้ว 1 รอบ **ยังไม่เคยลองกับเอกสารจริง**
+> **Learning prototype. Not for deciding ownership, and not for data entry without a person checking every value.**
+> Every image in this repository is synthetic. Not affiliated with any government agency.
+> Do not post real deeds or personal data in issues or pull requests.
 
-## กลับมาทำต่อ
+**Status:** about 97.5% recall and precision on unseen synthetic maps, but **not usable on real deeds yet**
+(see [Real deeds](#real-deeds)).
+
+![Synthetic single-parcel map](samples_v2/S_page.jpg)
+
+## How it works
+
+```
+deed image
+  -> crop the map, using printed form words (Apple Vision)
+  -> YOLO-OBB finds rotated boxes in 6 classes: parcel, struck, marker, length, area, text
+  -> each parcel number is cut out and rotated upright
+  -> a small CRNN reads it (Thai ๐-๙ or Arabic 0-9, never a mix)
+  -> compared with the parcel-number field in the deed header
+  -> a person checks the image and types the final number
+```
+
+Real maps mix numeral systems on one sheet, so "any 1-4 digit number" is not a usable rule. These patterns,
+taken from four real images, shaped the synthetic data:
+
+| Item | Written in |
+|---|---|
+| Parcel number | Thai digits (a share of Arabic pages is an assumption) |
+| Boundary marker | Arabic digits plus a Thai letter on two lines, e.g. `3ก` / `8580` |
+| Length | Arabic digits |
+| Area (rai-ngan-wa), scale | Thai digits |
+
+## Run the prototype (macOS only)
 
 ```bash
 uv venv --python 3.13 .venv && uv pip install --python .venv/bin/python -r requirements.txt
-swiftc -O vision_ocr.swift -o vision_ocr        # macOS เท่านั้น
-.venv/bin/python app.py                         # ต้นแบบ http://127.0.0.1:8765
-```
-
-มีในนี้: โค้ดทั้งหมด, โมเดล `best.pt` (YOLO-OBB) และ `ocr_thai.pt` (อ่านเลข), ผลวัดใน `results/`
-ไม่มีในนี้: `data_v2/` (สร้างใหม่ด้วย `generate_v2.py` ต้องใช้ฟอนต์บนเครื่อง), `feedback/` และโฉนดจริง (ข้อมูลส่วนตัว ห้ามขึ้น Git)
-
-สถานะ: บนภาพจำลองใหม่ recall/precision ราว 97.5% แต่**โฉนดจริงยังใช้ไม่ได้**
-
-ทำต่อเมื่อมีข้อมูลจริง (ที่เจ้าของยินยอม):
-
-1. ใช้ต้นแบบเก็บลายมือจริงใน `feedback/` แยกชุดทดสอบตามโฉนด
-2. เขียนสคริปต์ fine-tune `ocr_thai.pt` ผสมภาพจำลอง (ยังไม่มี)
-3. เพิ่มแบบฟอร์มโฉนด ขอบลาย ตรา เลขวาดทับ ในตัวสร้างภาพ แล้วเทรน YOLO ใหม่
-4. เก็บตำแหน่งกรอบในต้นแบบด้วย เพื่อ fine-tune YOLO
-5. วัดกับโฉนดจริงหลักร้อยใบก่อนคิดเรื่องผ่านอัตโนมัติ
-
-License: `best.pt` เทรนด้วย Ultralytics (AGPL-3.0) จากโมเดลที่ใช้ DOTAv1 ก่อนเปิดสาธารณะหรือใช้เชิงพาณิชย์ต้องเช็ก
-
-## รูปแบบเอกสารจริงที่ใช้ออกแบบ (ดูจากภาพจริง 4 ภาพ)
-
-| ข้อมูล | เลข |
-|---|---|
-| เลขที่ดิน | ไทย (บางแผ่นอารบิก เป็นข้อสมมติ) |
-| หลักเขต | อารบิก + อักษรไทย สองบรรทัด เช่น 3ก / 8580 |
-| ระยะ | อารบิก |
-| เนื้อที่ ไร่-งาน-วา, มาตราส่วน | ไทย |
-
-## ไฟล์
-
-| ไฟล์ | หน้าที่ |
-|---|---|
-| `generate_v2.py` | สร้างแผนที่จำลอง + เฉลย 6 คลาส (ใช้ฟังก์ชันจาก `generate.py`) |
-| `vision_ocr.swift` | OCR ออฟไลน์ด้วย Apple Vision |
-| `run_v2.py` | วัด baseline แยกคลาส → `results/baseline_v2.json` |
-| `crop_variants.py` | เทียบวิธีตัดภาพบน val → `results/crop_variants.json` |
-| `evaluate.py` | จับคู่ผลกับเฉลย |
-| `generate.py`, `run_baselines.py` | รุ่น v1 (เลขอารบิก เลิกใช้ ข้อมูลลบแล้ว) เก็บไว้เพราะ v2 เรียก `generate.py` |
-
-## รัน (macOS, Python 3 + numpy, pillow, scipy)
-
-```bash
 swiftc -O vision_ocr.swift -o vision_ocr
-python3 generate_v2.py --out data_v2 --per-office 200     # ~8 นาที, 1.1 GB
-python3 run_v2.py --data data_v2 --work /tmp/work         # ~36 นาทีบน M2
-python3 crop_variants.py --work /tmp/work2
+.venv/bin/python app.py                         # http://127.0.0.1:8765
 ```
 
-ฟอนต์ใน train/val/test ไม่ซ้ำกัน บางตัวมาจาก `~/Library/Fonts` (Anuphan, ChulaCharas)
-ถ้าไม่มี สคริปต์จะหยุดและบอกชื่อ
+Installing from scratch with `requirements.txt` has not been tested. macOS is required because form fields are
+located with Apple Vision.
 
-## ข้อมูล v2
+- **Nothing is pre-filled.** On one real deed the header and the map were read the same way and both were wrong.
+- It listens on `127.0.0.1` only. The uploaded page stays in memory and is not written to disk by the server,
+  except for a temporary copy used while Apple Vision runs, which is then removed.
+- If consent is ticked, only the crop of the number and the confirmed value go to `feedback/` for later fine-tuning.
+- **Do not expose it to the internet:** there is no login and no HTTPS.
 
-2,000 แผ่น แบ่งตามสำนักงาน: train 1–6 (1,200), val 7–8 (400), test 9–10 (400)
-S แปลงเดี่ยวพิมพ์ · H แปลงเดี่ยวลายมือเก่า · P ผังจัดสรรพิมพ์ · Q ผังเก่าแน่น (อย่างละเท่ากัน)
+## Results
 
-## ผล: เลขที่ดินไทยบน test (Apple Vision ไม่เทรน)
+Right means every digit of the number is right. Page types: **S** single parcel, printed; **H** single parcel,
+simulated old handwriting; **P** subdivision, printed; **Q** old dense subdivision.
 
-ทุกเลขในหน้าเลขไทย 12,407 ตัว, 349 แผ่น:
+### Final test: 200 unseen synthetic pages
 
-| อ่านถูก | S | H | P | Q | รวม |
-|---|---|---|---|---|---|
-| A อ่านทั้งแผ่น | 97.6 | 93.4 | 74.2 | 39.2 | **50.7** |
-| B แบ่งช่อง 480 ขยาย 2 เท่า | 92.6 | 87.5 | 82.6 | 52.2 | **61.6** |
+New offices and fonts used nowhere else, never viewed, measured once (`results/test2.json`).
 
-B: หาไม่เจอ 19.6%, หาเจอแต่อ่านผิด 18.8%
-
-สุ่มไม่เกิน 10 เลขต่อแผ่น 2,513 ตัว (เลขชุดเดียวกันทุกวิธี):
-
-| อ่านถูก | S | H | P | Q | รวม |
-|---|---|---|---|---|---|
-| A | 97.6 | 93.4 | 73.6 | 39.2 | 68.5 |
-| B | 92.6 | 87.5 | 82.3 | 52.7 | 74.6 |
-| C ตัดจากเฉลย 64 px | 80.6 | 80.4 | 77.0 | 60.7 | 72.5 |
-| C ตัดจากเฉลย 40 px (เลือกจาก val) | 92.8 | 83.6 | 90.0 | 72.8 | **83.6** |
-
-C ใช้ตำแหน่งเฉลย จึงใช้จริงไม่ได้ ใช้ประเมินว่าตัวหาตำแหน่งที่ดีจะช่วยเท่าไร
-C ไม่ใช่เพดาน เพราะ A ยังชนะใน S และ H
-
-คลาสอื่น (B ทุกแบบ): หลักเขต 79.3 · ระยะ 84.6 · เนื้อที่ 17.5
-
-Auto-pass (B, หน้าเลขไทย):
-
-| กฎ | ครอบคลุม | ผิดในที่ผ่าน |
-|---|---|---|
-| ผ่านหมด | 61.5% | 15.1% |
-| มีในทะเบียน | 61.2% | 5.1% |
-| A ตรงกับ B + ทะเบียน | 38.2% | 2.0% (96 ตัว เป็นเลขขีดฆ่า 55) |
-
-## เทรน YOLO-OBB บน Colab (เทรนแล้ว 1 รอบ: `best.pt`)
-
-| ไฟล์ | หน้าที่ |
-|---|---|
-| `prepare_yolo.py` | แปลง train/val เป็น `colab/land_yolo.zip` (ไม่มี test) |
-| `colab/train_yolo_obb.ipynb` | notebook เทรน (`yolo26n-obb.pt`, ภาพ 960 px) |
-| `yolo_tiles.py` | ทำนายทั้งหน้าแบบแบ่งช่อง (ฝังใน notebook) |
-| `score_yolo.py` | วัดผลบน Mac: การหา + ตัด 40 px + อ่าน |
-
-คลาส: parcel, struck, marker, length, area, text
-zip: train 2,400 ช่อง, val 600 ช่อง, หน้าเต็มของ val 120 แผ่น
-
-ตัวเลขที่ต้องชนะ (เลขที่ดิน 4,331 ตัว บน val 120 แผ่นเดียวกัน, `results/baseline_val120.json`):
-
-| อ่านถูก | S | H | P | Q | รวม |
-|---|---|---|---|---|---|
-| A อ่านทั้งแผ่น | 91.2 | 84.9 | 72.2 | 26.6 | 40.7 |
-| B แบ่งช่อง | 91.2 | 82.5 | 79.0 | 36.8 | **49.4** |
-| อ้างอิง: รู้ตำแหน่งเฉลย + ทะเบียนช่วยเลือกทิศ | 94.4 | 88.1 | 95.1 | 64.8 | 73.3 |
-
-แถวอ้างอิงใช้ตำบลจากเฉลยค้นทะเบียน จึงสูงเกินจริงเล็กน้อย และ A/B ไม่ได้ใช้ทะเบียน
-
-### ผล YOLO รอบแรก (val 120 แผ่น, `results/yolo_val120*.json`)
-
-หาเลขที่ดินเจอเกือบครบ 100% (precision 100% เมื่อปัดทศนิยม) · struck 99.4 · marker/length/area 100 · text 88.0
-Val ใช้ตัวสร้างภาพเดียวกับ train (ต่างแค่สำนักงานและฟอนต์) และถูกใช้เลือก `best.pt` **คะแนนการหาจึงสูงเกินจริง**
-
-| อ่านถูก | S | H | P | Q | รวม |
-|---|---|---|---|---|---|
-| B แบ่งช่อง (ไม่เทรน) | 91.2 | 82.5 | 79.0 | 36.8 | 49.4 |
-| **YOLO + ตัด 40 px ไม่ใช้ทะเบียน** (เทียบกับ B ได้ตรง) | 91.2 | 81.7 | 94.5 | 61.8 | **70.7** |
-| YOLO + ทะเบียนช่วยเลือกทิศ | 93.6 | 85.7 | 95.4 | 64.1 | 72.7 |
-
-ที่อ่านผิดมากสุด (ไม่ใช้ทะเบียน): ๔→๕ 124, ๘→๔ 85, ๘→๕ 71, ๓→n/ต 108
-หมายเหตุ: ตอนแรก `score_yolo.py` อ่านได้ 0.3% เพราะมุมกรอบของ Ultralytics วนทวนเข็ม ทำให้ภาพกลับกระจก แก้แล้ว
-
-### OCR เลขไทยของเรา (`ocr_thai.pt`, CRNN 0.9 ล้านพารามิเตอร์)
-
-`ocr_data.py` สร้างภาพฝึก (ลายมือจำลอง 40,000 + ตัดจาก train 20,175) · `train_ocr.py` เทรน · `read_numbers.py` วัดและอ่านภาพ
-
-เลขที่ดิน 4,331 ตัว, val 120 แผ่นเดียวกัน, ไม่ใช้ทะเบียน (`results/reader_val120.json`):
-
-| อ่านถูก | S | H | P | Q | รวม |
-|---|---|---|---|---|---|
-| YOLO + Apple Vision | 91.2 | 81.7 | 94.5 | 61.8 | 70.7 |
-| **YOLO + OCR ของเรา** | 100 | 100 | 100 | 94.1 | **95.8** |
-
-val ถูกใช้เลือก epoch และเลือกวิธีอ่านทิศเดียว (อ่านสองทิศแล้วเลือกที่มั่นใจกว่าได้ 88.7) และมาจากตัวสร้างภาพเดียวกับ train
-
-**โฉนดจริง (ดูก่อนออกแบบลายมือ จึงไม่ใช่การทดสอบอิสระ):** ภาพคมหนึ่งภาพ เลขที่ดินในแผนที่ 4 ตัว อ่านถูก 2
-(Apple Vision 1 ที่ขนาดดีสุด) ภาพที่สองเบลอ อ่านแปลงเป้าหมายผิดด้วยความมั่นใจ 0.97 **จึงห้ามใช้ความมั่นใจทำ auto-pass กับของจริง**
-
-### ผลสุดท้ายบน test2 (สำนักงาน 11–12, 200 แผ่น, ไม่เคยเปิดดู, ฟอนต์ไม่เคยใช้ที่อื่น, วัดครั้งเดียว)
-
-`results/test2.json` · สร้างด้วย `generate_v2.py --offices 11-12 --per-office 100` · วัดด้วย `final_metrics.py`
-
-| เลขที่ดิน 7,123 ตัว | recall | precision | F1 |
+| 7,123 parcel numbers | Recall | Precision | F1 |
 |---|---|---|---|
-| หา (YOLO) | 99.93 | 99.92 | 99.92 |
-| หา + อ่านถูกทุกหลัก | 97.50 | 97.49 | 97.49 |
+| Find (YOLO) | 99.93 | 99.92 | 99.92 |
+| **Find and read** | **97.50** | **97.49** | **97.49** |
 
-อ่านถูกครบทั้งแผ่น 73.5% (S 100, H 92, P 96, **Q 6**)
+All numbers on the page right: 73.5% of pages (S 100, H 92, P 96, **Q 6**).
 
-**โฉนดจริง 3 ภาพที่นับได้ (ทั้งหน้า):** หา recall 5/7, precision 5/17 · หา+อ่าน recall 2/7, precision 2/17 → **ยังใช้จริงไม่ได้**
+After this measurement the reader was changed to never mix Thai and Arabic digits in one number. On validation
+that moved accuracy from 95.77 to 95.75; the final test was not run again.
 
-License: Ultralytics เป็น AGPL-3.0 · โมเดลตั้งต้นเทรนจาก DOTAv1 (ภาพต้นทางใช้เชิงวิชาการ)
+### From baseline to current model: 120 validation pages, 4,331 numbers
 
-## ต้นแบบ (เว็บบนเครื่องนี้เท่านั้น)
+| Read correctly (%) | S | H | P | Q | All |
+|---|---|---|---|---|---|
+| A: Apple Vision, whole page | 91.2 | 84.9 | 72.2 | 26.6 | 40.7 |
+| B: Apple Vision, tiles | 91.2 | 82.5 | 79.0 | 36.8 | 49.4 |
+| YOLO + Apple Vision | 91.2 | 81.7 | 94.5 | 61.8 | 70.7 |
+| **YOLO + our reader** | 100 | 100 | 100 | 94.1 | **95.8** |
+
+None of these rows uses the registry. Validation was used to pick the YOLO weights, the reader epoch and the
+reading direction, and it comes from the same generator as training, so these scores are optimistic.
+
+### Real deeds
+
+Counted by eye on the three real images where the truth could be read (whole page, best-looking scale per image):
+
+| | Recall | Precision |
+|---|---|---|
+| Find | 5/7 | 5/17 |
+| Find and read | 2/7 | 2/17 |
+
+- Too few images for percentages, and the images were seen while parts of the system were being designed.
+- Best case: on one sharp scan (1,276 px wide) all 14 boundary markers and all 4 parcel numbers in the map were found, and 2 of the 4 were read correctly.
+- Cropping to the map removed the false parcel numbers on the two deeds tried, but lost one true number.
+- Images 600-850 px wide did not work.
+- A wrong reading had a confidence of 0.97, so **confidence must not be used to skip human review.**
+
+### Baselines without training: synthetic test, Thai-numbered pages
+
+12,407 numbers on 349 pages (`results/baseline_v2.json`):
+
+| Read correctly (%) | S | H | P | Q | All |
+|---|---|---|---|---|---|
+| A: whole page | 97.6 | 93.4 | 74.2 | 39.2 | 50.7 |
+| B: 480 px tiles, enlarged 2x | 92.6 | 87.5 | 82.6 | 52.2 | 61.6 |
+
+With B, 19.6% of the numbers were not found and 18.8% were found but misread. Treating any 1-4 digit number as a
+parcel number was right 35% of the time; requiring all-Thai digits, 85%.
+
+## Files
+
+| File | Purpose |
+|---|---|
+| `app.py`, `app.html`, `pipeline.py` | Local review app and the full pipeline |
+| `best.pt`, `ocr_thai.pt` | Trained YOLO-OBB and digit reader (0.9M parameters) |
+| `generate_v2.py` | Synthetic maps with ground truth (uses helpers from `generate.py`) |
+| `prepare_yolo.py`, `colab/train_yolo_obb.ipynb` | Build the YOLO dataset and train on Colab |
+| `ocr_data.py`, `train_ocr.py` | Build reader images and train the reader |
+| `yolo_tiles.py`, `read_numbers.py` | Tiled detection and number reading |
+| `final_metrics.py`, `score_yolo.py`, `evaluate.py` | Scoring |
+| `run_v2.py`, `crop_variants.py`, `vision_ocr.swift` | Apple Vision baselines |
+| `run_baselines.py` | First version (v1), no longer used |
+
+## Rebuild the data
 
 ```bash
-.venv/bin/python app.py      # แล้วเปิด http://127.0.0.1:8765
+python3 generate_v2.py --out data_v2 --per-office 200                    # about 8 min on an M2, 1.1 GB
+python3 generate_v2.py --out data_v2 --per-office 100 --offices 11-12    # final test set, 129 MB
 ```
 
-`pipeline.py` ตัดแผนที่จากคำในแบบฟอร์ม → YOLO หลายขนาด → อ่านเลข → เทียบช่องเลขที่ดินในหัวโฉนด
-`app.py` + `app.html` หน้าให้คนตรวจ **ไม่เติมค่าให้เลย** เพราะหัวกับแผนที่ผิดเหมือนกันได้
-(พบในโฉนดจริงหนึ่งใบ: อ่านตรงกันทั้งสองที่แต่ผิดทั้งคู่)
+Needs numpy, pillow and scipy. Pages are split by office: train 1-6 (1,200), val 7-8 (400), test 9-10 (400),
+final test 11-12 (200). Digit fonts differ between splits, and some come from `~/Library/Fonts`
+(Anuphan, ChulaCharas, CHULALONGKORN, SF Pro TH). The script stops and names any missing font; other fonts give different images.
 
-- รับเฉพาะเครื่องนี้ (127.0.0.1) ภาพทั้งใบอยู่ในหน่วยความจำ ไม่เขียนลงดิสก์
-- เมื่อติ๊กยินยอม เก็บเฉพาะภาพตัวเลข + ค่าที่คนยืนยันใน `feedback/` ไว้ fine-tune
-- ห้ามเปิดสู่อินเทอร์เน็ตแบบนี้: ไม่มีล็อกอินและไม่มี HTTPS
+## Next steps, once real data with consent exists
 
-## ข้อสรุป
+1. Collect real handwritten numbers with the prototype, and hold out a test set split by deed.
+2. Write a script that fine-tunes `ocr_thai.pt` on them mixed with synthetic images (not written yet).
+3. Add deed forms, ornamental borders, seals and overlaid numbers to the generator, then retrain YOLO.
+4. Save box positions in the prototype, so YOLO can be fine-tuned too.
+5. Measure on hundreds of real deeds before considering any automatic approval.
 
-1. S, H: อ่านทั้งแผ่นดีที่สุดแล้ว ยังไม่ต้องมีตัวหาตำแหน่งเพื่อการหา
-2. P, Q: ตัวหาตำแหน่ง (YOLO-OBB) น่าจะคุ้มที่สุด B → C: P 82→90, Q 53→73
-3. Q ยังอ่านผิด 27% แม้รู้ตำแหน่ง ต้อง fine-tune OCR เลขไทยต่อ
-4. ต้องแยกคลาส: กฎ "เลข 1–4 หลัก" ถูก 35%, กฎ "เลขไทยล้วน" ถูก 85% (B)
-5. ต้องมีตัวจำแนกเลขขีดฆ่า
+## Limitations
 
-## ข้อจำกัด
+- Almost all results are on synthetic images. They compare methods; they do not predict accuracy on real deeds.
+- Simulated handwriting comes from warped fonts and redrawn glyph outlines, not from people.
+- Vertical numbers make up 41% of synthetic parcel numbers, probably more than in reality.
+- The reader was trained on 1-4 digit numbers only, and is not measured on markers, lengths or areas.
+- The target parcel is guessed as the number nearest the middle of the boundary markers. This guess has not been measured.
+- The test split of offices 9-10 is not clean: 8 pages were run while debugging, some were viewed while fixing the
+  generator, and one crop variant's test score was seen before selection. Offices 11-12 were made for that reason.
 
-- **ภาพจำลองทั้งหมด** คะแนนใช้เทียบวิธี ไม่ใช่ความแม่นบนโฉนดจริง
-- ลายมือเลขไทยเป็นฟอนต์บิดรูป · หัวกระดาษไม่มีลายมือจริง · เลขแนวตั้ง 41% อาจสูงเกินจริง
-- A และ B เป็น OCR ตัวเดียวกัน "เห็นตรงกัน" จึงอ่อนกว่าใช้ 2 engine จริง
-- ยังไม่มีขั้นเลือกแปลงเป้าหมายอัตโนมัติ
-- **test ไม่บริสุทธิ์:** 8 แผ่นเคยรันตอนลองระบบ, เคยเปิดดูภาพ test ตอนแก้ตัวสร้าง,
-  และรอบลอง `crop_variants.py` แสดงคะแนน test ของแบบ "thai word anchor" ก่อนเลือก
-  (แบบที่ชนะเลือกจาก val และไม่ใช่แบบนั้น) ก่อนวัดโมเดลที่เทรนแล้วต้องสร้าง test ใหม่
-- เอกสารจริงของผู้อื่นมีข้อมูลส่วนบุคคล ห้ามใส่ในโปรเจกต์หรืออัปโหลดขึ้น cloud
+## License
+
+[AGPL-3.0](LICENSE). `best.pt` was trained with Ultralytics (AGPL-3.0), starting from weights pretrained on DOTAv1,
+whose images and annotations are limited to academic use. Check both before any commercial use.

@@ -2,8 +2,8 @@
 
     .venv/bin/python app.py        then open http://127.0.0.1:8765
 
-Only this computer can reach it.  The uploaded page stays in memory and is never written
-to disk.  When the person ticks consent, only the small crop of the confirmed number and
+Only this computer can reach it.  The uploaded page stays in memory, apart from a temporary
+copy while Apple Vision runs (removed right after).  When the person ticks consent, only the small crop of the confirmed number and
 its correct value are saved to feedback/ for later fine-tuning.
 """
 import io, json, re, threading, time, uuid
