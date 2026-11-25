@@ -9,6 +9,9 @@ Finds and reads **parcel numbers** (เลขที่ดิน) on Thai land su
 **Status:** about 97.5% recall and precision on unseen synthetic maps, but **not usable on real deeds yet**
 (see [Real deeds](#real-deeds)).
 
+**Live demo:** <https://guttharada.github.io/land-document-ai/> (runs in your browser; images are not uploaded).
+Source of the demo: [`docs/`](docs).
+
 ![Synthetic single-parcel map](samples_v2/S_page.jpg)
 
 ## How it works
